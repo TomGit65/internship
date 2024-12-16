@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+
+    <link rel="icon" href="images/Clinic pic.png" />
+    <title>Clinic</title>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="left">
+        <img src="images/Logo(2).png" alt="Logo for website" class="logo" />
+      </div>
+      <div class="right">
+        <img
+          src="images/Notifications.png"
+          alt="icon for notification"
+          class="icon"
+        />
+        <div class="user-info">
+          <img src="images/user image.png" alt="user icon" class="user-image" />
+          <div class="user-text">
+            <span class="name">Lisa</span>
+            <span class="role">Operator</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="header">
+        <h1>Patient List</h1>
+        <div class="controls">
+          <input type="text" placeholder="Search bar" class="Search-input">
+        </div>
+        <select name="user" id="userNames">
+          <option>Status all</option>
+        </select>
+        <select>
+          <option>Breed All</option>
+        </select>
+        <button class="add-botton">+ Add new patient</button>
+      </div>
+    </div>
+
+      <table
+        class="Patient-table">
+        <thead>
+          <tr>
+            <th>CheckBox</th>
+            <th>ID</th>
+            <th>Pet Name</th>
+            <th>Status</th>
+            <th>Pawrent</th>
+            <th>Breed</th>
+            <th>Gender</th>
+            <th>Date of Birth</th>
+            <th>Contact number No</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>B-0025</td>
+            <td>Milo</td>
+            <td><img src="images/allergy.png" alt="Status" class="icon"></td>
+            <td>The' Nu San</td>
+            <td>Beagle</td>
+            <td>Male</td>
+            <td>1.5.2021</td>
+            <td>09797122499</td>
+            <td>Hlaing, Yangon</td>
+            <td>
+              <button class="action-btn-edit">Edit</button>
+              <button class="action-btn-delete">Delete</button>
+            </td>
+          </tr>
+          <td><input type="checkbox"></td>
+          <td>S-0189</td>
+          <td>MJ</td>
+          <td><img src="images/allergy.png" alt="Status" class="icon"></td>
+          <td>NayChi Lin</td>
+          <td>Spaniel</td>
+          <td>Female</td>
+          <td>18.6.2021</td>
+          <td>09784517545</td>
+          <td>Hlaing, Yangon</td>
+          <td>
+            <button class="action-btn-edit">Edit</button>
+            <button class="action-btn-delete">Delete</button>
+          </td>
+          <tr>
+            <td><input type="checkbox"></td>
+          <td>G-0089</td>
+          <td>LuLU</td>
+          <td><img src="images/picky eater.png" alt="Status" class="icon"></td>
+          <td>Pink Pink</td>
+          <td>Golden Retriever</td>
+          <td>Female</td>
+          <td>1.5.2021</td>
+          <td>09794781245</td>
+          <td>Hlaing, Yangon</td>
+          <td>
+            <button class="action-btn-edit">Edit</button>
+            <button class="action-btn-delete">Delete</button>
+          </td>
+          </tr>
+
+          <tr>
+            <td><input type="checkbox"></td>
+            <td>G-0090</td>
+            <td>LuLU</td>
+            <td><img src="images/picky eater.png" alt="Status" class="icon"></td>
+            <td>Sky</td>
+            <td>Golden Retriever</td>
+            <td>Female</td>
+            <td>1.5.2021</td>
+            <td>09794781245</td>
+            <td>Hlaing, Yangon</td>
+          <td>
+            <button class="action-btn-edit">Edit</button>j
+            <button class="action-btn-delete">Delete</button>
+          </td>
+          </tr>
+        </tbody>
+        <div class="pagination">
+          Rows per page:
+          <select>
+            <option>10</option>
+            <option>20</option>
+            <option>50</option>
+          </select>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
