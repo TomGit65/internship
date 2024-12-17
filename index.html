@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js"></script>
-
     <link rel="icon" href="images/Clinic pic.png" />
     <title>Clinic</title>
   </head>
@@ -49,7 +47,7 @@
     </div>
 
       <table
-        class="Patient-table">
+         id="Patient-table" class="Patient-table">
         <thead>
           <tr>
             <th>CheckBox</th>
@@ -62,72 +60,11 @@
             <th>Date of Birth</th>
             <th>Contact number No</th>
             <th>Address</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>B-0025</td>
-            <td>Milo</td>
-            <td><img src="images/allergy.png" alt="Status" class="icon"></td>
-            <td>The' Nu San</td>
-            <td>Beagle</td>
-            <td>Male</td>
-            <td>1.5.2021</td>
-            <td>09797122499</td>
-            <td>Hlaing, Yangon</td>
-            <td>
-              <button class="action-btn-edit">Edit</button>
-              <button class="action-btn-delete">Delete</button>
-            </td>
-          </tr>
-          <td><input type="checkbox"></td>
-          <td>S-0189</td>
-          <td>MJ</td>
-          <td><img src="images/allergy.png" alt="Status" class="icon"></td>
-          <td>NayChi Lin</td>
-          <td>Spaniel</td>
-          <td>Female</td>
-          <td>18.6.2021</td>
-          <td>09784517545</td>
-          <td>Hlaing, Yangon</td>
-          <td>
-            <button class="action-btn-edit">Edit</button>
-            <button class="action-btn-delete">Delete</button>
-          </td>
-          <tr>
-            <td><input type="checkbox"></td>
-          <td>G-0089</td>
-          <td>LuLU</td>
-          <td><img src="images/picky eater.png" alt="Status" class="icon"></td>
-          <td>Pink Pink</td>
-          <td>Golden Retriever</td>
-          <td>Female</td>
-          <td>1.5.2021</td>
-          <td>09794781245</td>
-          <td>Hlaing, Yangon</td>
-          <td>
-            <button class="action-btn-edit">Edit</button>
-            <button class="action-btn-delete">Delete</button>
-          </td>
-          </tr>
-
-          <tr>
-            <td><input type="checkbox"></td>
-            <td>G-0090</td>
-            <td>LuLU</td>
-            <td><img src="images/picky eater.png" alt="Status" class="icon"></td>
-            <td>Sky</td>
-            <td>Golden Retriever</td>
-            <td>Female</td>
-            <td>1.5.2021</td>
-            <td>09794781245</td>
-            <td>Hlaing, Yangon</td>
-          <td>
-            <button class="action-btn-edit">Edit</button>j
-            <button class="action-btn-delete">Delete</button>
-          </td>
-          </tr>
+          
         </tbody>
         <div class="pagination">
           Rows per page:
@@ -138,17 +75,75 @@
           </select>
         </div>
       </div>
+<div id="add-patient-form" class="modal hidden">
+  <div class="modal-content">
+    <span class="close-btn" id="close-btn">&times;</span>
+    <h2>Add new patient</h2>
+    <p>Enter new patient information below</p>
+    <form id="patient-form">
+      <div class="form-row">
+        <label>Pet Name</label>
+        <input type="text" id="pet-name" placeholder="Enter pet name" />
+        <label>Status</label>
+        <select id="status">
+          <option>Please choose status</option>
+          <option>Healthy</option>
+          <option>Under Treatment</option>
+        </select>
+      </div>
 
+      <div class="form-row">
+        <label>Pawrent</label>
+        <input type="text" id="pawrent" placeholder="Enter pawrent name" />
+        <label>Breed</label>
+        <select id="breed">
+          <option>Please choose breed</option>
+          <option>Beagle</option>
+          <option>Golden Retriever</option>
+        </select>
+      </div>
 
+      <div class="form-row">
+        <label>Gender</label>
+        <div class="radio-group">
+          <input type="radio" name="gender" id="male" value="Male" checked />
+          <label for="male">Male</label>
+          <input type="radio" name="gender" id="female" value="Female" />
+          <label for="female">Female</label>
+        </div>
+        <label>Date of Birth</label>
+        <input type="date" id="dob" />
+      </div>
 
+      <div class="form-row">
+        <label>Contact Phone No.</label>
+        <input type="text" id="phone" placeholder="Enter phone number" />
+        <label>Address</label>
+        <input type="text" id="address" placeholder="Enter address" />
+      </div>
 
+      <div class="form-row">
+        <label>City</label>
+        <select id="city">
+          <option>Please choose city</option>
+          <option>Yangon</option>
+          <option>Mandalay</option>
+        </select>
+        <label>Township</label>
+        <select id="township">
+          <option>Please choose township</option>
+          <option>Hlaing</option>
+          <option>Sanchaung</option>
+        </select>
+      </div>
 
-
-
-
-
-
-
-
+      <div class="form-buttons">
+        <button type="button" id="save-btn">Save</button>
+        <button type="button" id="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="script.js"></script>
   </body>
 </html>
