@@ -3,7 +3,7 @@ const addBtn = document.querySelector(".add-botton"); // Add new patient button
 const modal = document.querySelector("#add-patient-form"); // Modal form container
 const closeBtn = document.querySelector("#close-btn"); // Close button on modal
 const cancelBtn = document.querySelector("#cancel-btn"); // Cancel button
-const saveBtn = document.querySelector("#save-btn"); // Save button
+const updateBtn = document.querySelector("#update-btn"); // update button
 const tableBody = document.querySelector("#Patient-table tbody"); // Table body
 let currentEditRow = null; // Variable to track the row being edited
 let currentDeleteRow = null; // Variable to track the row being deleted
@@ -12,6 +12,26 @@ let currentDeleteRow = null; // Variable to track the row being deleted
 const deleteModal = document.getElementById("delete-confirmation-modal");
 const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
 const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
+
+// Notification Popup References
+const notification = document.getElementById("notification");
+const notificationMessage = document.getElementById("notification-message");
+const notificationClose = document.getElementById("notification-close");
+
+// Function to show notification
+function showNotification(message, timeout = 3000) {
+  notificationMessage.textContent = message; // Set message text
+  notification.classList.remove("hidden"); // Show notification
+  const hideTimeout = setTimeout(() => {
+    notification.classList.add("hidden"); // Hide after timeout
+  }, timeout);
+
+  // Manual close button functionality
+  notificationClose.onclick = () => {
+    notification.classList.add("hidden");
+    clearTimeout(hideTimeout); // Clear timeout
+  };
+}
 
 // Open Add Patient Modal when "Add new patient" button is clicked
 addBtn.addEventListener("click", () => {
@@ -47,22 +67,21 @@ function closeDeleteModal() {
 }
 
 // Event listener for "Yes" button (confirm delete)
-confirmDeleteBtn.addEventListener("click", function() {
-  // Remove the row when confirmed
+confirmDeleteBtn.addEventListener("click", function () {
   if (currentDeleteRow) {
-    currentDeleteRow.remove();
+    currentDeleteRow.remove(); // Remove the row
+    showNotification("Patient successfully deleted!"); // Show notification
   }
-  // Close the modal after confirming
-  closeDeleteModal();
+  closeDeleteModal(); // Close the modal
 });
 
 // Event listener for "No" button (cancel delete)
-cancelDeleteBtn.addEventListener("click", function() {
+cancelDeleteBtn.addEventListener("click", function () {
   closeDeleteModal(); // Close the modal without deleting
 });
 
-// Event listener for Save button (Save or Edit patient)
-saveBtn.addEventListener("click", () => {
+// Event listener for update button (update or Edit patient)
+updateBtn.addEventListener("click", () => {
   // Retrieve form data
   const petName = document.querySelector("#pet-name").value;
   const status = document.querySelector("#status").value;
@@ -72,21 +91,10 @@ saveBtn.addEventListener("click", () => {
   const dob = document.querySelector("#dob").value;
   const phone = document.querySelector("#phone").value;
   const address = document.querySelector("#address").value;
-  const city = document.querySelector("#city").value;
-  const township = document.querySelector("#township").value;
 
   // Validate form data
-  if (
-    !petName ||
-    !pawrent ||
-    !breed ||
-    !status ||
-    !gender ||
-    !dob ||
-    !phone ||
-    !address
-  ) {
-    alert("All fields are required!");
+  if (!petName || !pawrent || !breed || !status || !gender || !dob || !phone || !address) {
+    showNotification("All fields are required!", 4000);
     return;
   }
 
@@ -94,6 +102,7 @@ saveBtn.addEventListener("click", () => {
     status === "Under Treatment"
       ? "images/allergy.png"
       : "images/picky eater.png"; // Dynamic status icon
+
   if (currentEditRow) {
     // Edit existing patient
     currentEditRow.children[2].textContent = petName;
@@ -104,8 +113,8 @@ saveBtn.addEventListener("click", () => {
     currentEditRow.children[7].textContent = dob;
     currentEditRow.children[8].textContent = phone;
     currentEditRow.children[9].textContent = address;
-    // Close the modal
     modal.classList.add("hidden");
+    showNotification("Patient successfully updated!"); // Show notification
   } else {
     // Add new patient
     const newRow = document.createElement("tr");
@@ -125,43 +134,47 @@ saveBtn.addEventListener("click", () => {
         <button class="action-btn-delete">Delete</button>
       </td>
     `;
-    // Append the new row to the table
     tableBody.appendChild(newRow);
-    // Add event listeners for edit and delete buttons
     newRow.querySelector(".action-btn-edit").addEventListener("click", () => {
-      // Populate modal with the patient's current data for editing
       currentEditRow = newRow;
       document.querySelector("#pet-name").value = petName;
       document.querySelector("#status").value = status;
       document.querySelector("#pawrent").value = pawrent;
       document.querySelector("#breed").value = breed;
-      document.querySelector(
-        `input[name="gender"][value="${gender}"]`
-      ).checked = true;
+      document.querySelector(`input[name="gender"][value="${gender}"]`).checked = true;
       document.querySelector("#dob").value = dob;
       document.querySelector("#phone").value = phone;
       document.querySelector("#address").value = address;
-      modal.classList.remove("hidden"); // Show modal for editing
+      modal.classList.remove("hidden");
     });
 
     newRow.querySelector(".action-btn-delete").addEventListener("click", () => {
-      // Set the current row to be deleted
       currentDeleteRow = newRow;
-      // Show the delete confirmation modal
       openDeleteModal();
     });
 
-    alert("Patient added successfully!");
+    showNotification("Patient added successfully!");
   }
 
-  // Close the modal and reset the form
   modal.classList.add("hidden");
   document.querySelector("#patient-form").reset();
 });
 
-// Event listener to show delete modal from delete button
-document.querySelectorAll('.action-btn-delete').forEach(button => {
-  button.addEventListener('click', function() {
-    openDeleteModal();
-  });
-});
+function showNotification(message) {
+  const notification = document.getElementById("notification");
+  const notificationMessage = document.getElementById("notification-message");
+
+  // Set the message text
+  notificationMessage.textContent = message;
+
+  // Show the notification
+  notification.classList.remove("hidden");
+
+  // Auto-hide after 3 seconds
+  setTimeout(() => {
+    notification.classList.add("hidden");
+  }, 3000);
+}
+
+// Example usage:
+showNotification("Patient is successfully updated!");
