@@ -1,10 +1,11 @@
 // Modal and Button References for Add Patient
-const addBtn = document.querySelector(".add-botton"); // Add new patient button
+const addBtn = document.querySelector(".add-button"); // Add new patient button
 const modal = document.querySelector("#add-patient-form"); // Modal form container
 const closeBtn = document.querySelector("#close-btn"); // Close button on modal
 const cancelBtn = document.querySelector("#cancel-btn"); // Cancel button
-const updateBtn = document.querySelector("#update-btn"); // update button
-const tableBody = document.querySelector("#Patient-table tbody"); // Table body
+const saveBtn = document.querySelector("#save-btn"); // Save button
+const updateBtn = document.querySelector("#update-btn"); // Update button
+const tableBody = document.querySelector("#patient-table tbody"); // Table body
 let currentEditRow = null; // Variable to track the row being edited
 let currentDeleteRow = null; // Variable to track the row being deleted
 
@@ -37,6 +38,8 @@ function showNotification(message, timeout = 3000) {
 addBtn.addEventListener("click", () => {
   currentEditRow = null; // Reset the edit row
   document.querySelector("#patient-form").reset(); // Reset the form
+  saveBtn.classList.remove("hidden"); // Show Save button
+  updateBtn.classList.add("hidden"); // Hide Update button
   modal.classList.remove("hidden"); // Show the modal
 });
 
@@ -80,13 +83,13 @@ cancelDeleteBtn.addEventListener("click", function () {
   closeDeleteModal(); // Close the modal without deleting
 });
 
-// Event listener for update button (update or Edit patient)
-updateBtn.addEventListener("click", () => {
+// Event listener for Save button (add new patient)
+saveBtn.addEventListener("click", () => {
   // Retrieve form data
   const petName = document.querySelector("#pet-name").value;
-  const status = document.querySelector("#status").value;
+  const status = document.querySelector("#modal-status").value;
   const pawrent = document.querySelector("#pawrent").value;
-  const breed = document.querySelector("#breed").value;
+  const breed = document.querySelector("#modal-breed").value;
   const gender = document.querySelector('input[name="gender"]:checked').value;
   const dob = document.querySelector("#dob").value;
   const phone = document.querySelector("#phone").value;
@@ -103,78 +106,86 @@ updateBtn.addEventListener("click", () => {
       ? "images/allergy.png"
       : "images/picky eater.png"; // Dynamic status icon
 
-  if (currentEditRow) {
-    // Edit existing patient
-    currentEditRow.children[2].textContent = petName;
-    currentEditRow.children[3].innerHTML = `<img src="${statusIcon}" alt="Status" class="icon">`; // Set status icon
-    currentEditRow.children[4].textContent = pawrent;
-    currentEditRow.children[5].textContent = breed;
-    currentEditRow.children[6].textContent = gender;
-    currentEditRow.children[7].textContent = dob;
-    currentEditRow.children[8].textContent = phone;
-    currentEditRow.children[9].textContent = address;
-    modal.classList.add("hidden");
-    showNotification("Patient successfully updated!"); // Show notification
-  } else {
-    // Add new patient
-    const newRow = document.createElement("tr");
-    newRow.innerHTML = `
-      <td><input type="checkbox"></td>
-      <td>${generateRandomID()}</td>
-      <td>${petName}</td>
-      <td><img src="${statusIcon}" alt="Status" class="icon"></td>
-      <td>${pawrent}</td>
-      <td>${breed}</td>
-      <td>${gender}</td>
-      <td>${dob}</td>
-      <td>${phone}</td>
-      <td>${address}</td>
-      <td>
-        <button class="action-btn-edit">Edit</button>
-        <button class="action-btn-delete">Delete</button>
-      </td>
-    `;
-    tableBody.appendChild(newRow);
-    newRow.querySelector(".action-btn-edit").addEventListener("click", () => {
-      currentEditRow = newRow;
-      document.querySelector("#pet-name").value = petName;
-      document.querySelector("#status").value = status;
-      document.querySelector("#pawrent").value = pawrent;
-      document.querySelector("#breed").value = breed;
-      document.querySelector(`input[name="gender"][value="${gender}"]`).checked = true;
-      document.querySelector("#dob").value = dob;
-      document.querySelector("#phone").value = phone;
-      document.querySelector("#address").value = address;
-      modal.classList.remove("hidden");
-    });
+  // Add new patient
+  const newRow = document.createElement("tr");
+  newRow.innerHTML = `
+    <td><input type="checkbox"></td>
+    <td>${generateRandomID()}</td>
+    <td>${petName}</td>
+    <td><img src="${statusIcon}" alt="Status" class="icon"></td>
+    <td>${pawrent}</td>
+    <td>${breed}</td>
+    <td>${gender}</td>
+    <td>${dob}</td>
+    <td>${phone}</td>
+    <td>${address}</td>
+    <td>
+      <button class="action-btn-edit">Edit</button>
+      <button class="action-btn-delete">Delete</button>
+    </td>
+  `;
+  tableBody.appendChild(newRow);
 
-    newRow.querySelector(".action-btn-delete").addEventListener("click", () => {
-      currentDeleteRow = newRow;
-      openDeleteModal();
-    });
+  // Add event listeners for edit and delete buttons
+  newRow.querySelector(".action-btn-edit").addEventListener("click", () => {
+    currentEditRow = newRow;
+    document.querySelector("#pet-name").value = petName;
+    document.querySelector("#modal-status").value = status;
+    document.querySelector("#pawrent").value = pawrent;
+    document.querySelector("#modal-breed").value = breed;
+    document.querySelector(`input[name="gender"][value="${gender}"]`).checked = true;
+    document.querySelector("#dob").value = dob;
+    document.querySelector("#phone").value = phone;
+    document.querySelector("#address").value = address;
+    saveBtn.classList.add("hidden"); // Hide Save button
+    updateBtn.classList.remove("hidden"); // Show Update button
+    modal.classList.remove("hidden");
+  });
 
-    showNotification("Patient added successfully!");
-  }
+  newRow.querySelector(".action-btn-delete").addEventListener("click", () => {
+    currentDeleteRow = newRow;
+    openDeleteModal();
+  });
 
+  showNotification("Patient added successfully!");
   modal.classList.add("hidden");
   document.querySelector("#patient-form").reset();
 });
 
-function showNotification(message) {
-  const notification = document.getElementById("notification");
-  const notificationMessage = document.getElementById("notification-message");
+// Event listener for Update button (edit existing patient)
+updateBtn.addEventListener("click", () => {
+  // Retrieve form data
+  const petName = document.querySelector("#pet-name").value;
+  const status = document.querySelector("#modal-status").value;
+  const pawrent = document.querySelector("#pawrent").value;
+  const breed = document.querySelector("#modal-breed").value;
+  const gender = document.querySelector('input[name="gender"]:checked').value;
+  const dob = document.querySelector("#dob").value;
+  const phone = document.querySelector("#phone").value;
+  const address = document.querySelector("#address").value;
 
-  // Set the message text
-  notificationMessage.textContent = message;
+  // Validate form data
+  if (!petName || !pawrent || !breed || !status || !gender || !dob || !phone || !address) {
+    showNotification("All fields are required!", 4000);
+    return;
+  }
 
-  // Show the notification
-  notification.classList.remove("hidden");
+  const statusIcon =
+    status === "Under Treatment"
+      ? "images/allergy.png"
+      : "images/picky eater.png"; // Dynamic status icon
 
-  // Auto-hide after 3 seconds
-  setTimeout(() => {
-    notification.classList.add("hidden");
-  }, 3000);
-}
+  // Update existing patient
+  currentEditRow.children[2].textContent = petName;
+  currentEditRow.children[3].innerHTML = `<img src="${statusIcon}" alt="Status" class="icon">`;
+  currentEditRow.children[4].textContent = pawrent;
+  currentEditRow.children[5].textContent = breed;
+  currentEditRow.children[6].textContent = gender;
+  currentEditRow.children[7].textContent = dob;
+  currentEditRow.children[8].textContent = phone;
+  currentEditRow.children[9].textContent = address;
 
-// Example usage:
-showNotification("Patient is successfully updated!");
+  showNotification("Patient successfully updated!");
+  modal.classList.add("hidden");
+  document.querySelector("#patient-form").reset();
+});
