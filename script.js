@@ -21,26 +21,26 @@ const notificationClose = document.getElementById("notification-close");
 
 // Function to show notification
 function showNotification(message, timeout = 3000) {
-  notificationMessage.textContent = message; // Set message text
-  notification.classList.remove("hidden"); // Show notification
+  notificationMessage.textContent = message; 
+  notification.classList.remove("hidden"); 
   const hideTimeout = setTimeout(() => {
-    notification.classList.add("hidden"); // Hide after timeout
+    notification.classList.add("hidden"); 
   }, timeout);
 
   // Manual close button functionality
   notificationClose.onclick = () => {
     notification.classList.add("hidden");
-    clearTimeout(hideTimeout); // Clear timeout
+    clearTimeout(hideTimeout); 
   };
 }
 
 // Open Add Patient Modal when "Add new patient" button is clicked
 addBtn.addEventListener("click", () => {
-  currentEditRow = null; // Reset the edit row
-  document.querySelector("#patient-form").reset(); // Reset the form
-  saveBtn.classList.remove("hidden"); // Show Save button
-  updateBtn.classList.add("hidden"); // Hide Update button
-  modal.classList.remove("hidden"); // Show the modal
+  currentEditRow = null; 
+  document.querySelector("#patient-form").reset(); 
+  saveBtn.classList.remove("hidden"); 
+  updateBtn.classList.add("hidden"); 
+  modal.classList.remove("hidden"); 
 });
 
 // Close Add Patient Modal when "close" or "cancel" button is clicked
@@ -80,12 +80,11 @@ confirmDeleteBtn.addEventListener("click", function () {
 
 // Event listener for "No" button (cancel delete)
 cancelDeleteBtn.addEventListener("click", function () {
-  closeDeleteModal(); // Close the modal without deleting
+  closeDeleteModal(); 
 });
 
 // Event listener for Save button (add new patient)
 saveBtn.addEventListener("click", () => {
-  // Retrieve form data
   const petName = document.querySelector("#pet-name").value;
   const status = document.querySelector("#modal-status").value;
   const pawrent = document.querySelector("#pawrent").value;
@@ -104,7 +103,7 @@ saveBtn.addEventListener("click", () => {
   const statusIcon =
     status === "Under Treatment"
       ? "images/allergy.png"
-      : "images/picky eater.png"; // Dynamic status icon
+      : "images/picky eater.png"; 
 
   // Add new patient
   const newRow = document.createElement("tr");
@@ -137,8 +136,8 @@ saveBtn.addEventListener("click", () => {
     document.querySelector("#dob").value = dob;
     document.querySelector("#phone").value = phone;
     document.querySelector("#address").value = address;
-    saveBtn.classList.add("hidden"); // Hide Save button
-    updateBtn.classList.remove("hidden"); // Show Update button
+    saveBtn.classList.add("hidden"); 
+    updateBtn.classList.remove("hidden"); 
     modal.classList.remove("hidden");
   });
 
@@ -154,7 +153,6 @@ saveBtn.addEventListener("click", () => {
 
 // Event listener for Update button (edit existing patient)
 updateBtn.addEventListener("click", () => {
-  // Retrieve form data
   const petName = document.querySelector("#pet-name").value;
   const status = document.querySelector("#modal-status").value;
   const pawrent = document.querySelector("#pawrent").value;
@@ -173,7 +171,7 @@ updateBtn.addEventListener("click", () => {
   const statusIcon =
     status === "Under Treatment"
       ? "images/allergy.png"
-      : "images/picky eater.png"; // Dynamic status icon
+      : "images/picky eater.png"; 
 
   // Update existing patient
   currentEditRow.children[2].textContent = petName;
