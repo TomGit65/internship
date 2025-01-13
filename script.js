@@ -37,7 +37,7 @@ function showNotification(message, timeout = 3000) {
 // Open Add Patient Modal when "Add new patient" button is clicked
 addBtn.addEventListener("click", () => {
   currentEditRow = null; 
-  document.querySelector("#patient-form").reset(); 
+  document.querySelector("#patient-form").reset();
   saveBtn.classList.remove("hidden"); 
   updateBtn.classList.add("hidden"); 
   modal.classList.remove("hidden"); 
@@ -45,10 +45,10 @@ addBtn.addEventListener("click", () => {
 
 // Close Add Patient Modal when "close" or "cancel" button is clicked
 closeBtn.addEventListener("click", () => {
-  modal.classList.add("hidden"); // Hide the modal
+  modal.classList.add("hidden"); 
 });
 cancelBtn.addEventListener("click", () => {
-  modal.classList.add("hidden"); // Hide the modal
+  modal.classList.add("hidden"); 
 });
 
 // Function to generate random ID for new patients
@@ -61,26 +61,26 @@ function generateRandomID() {
 
 // Function to open delete confirmation modal
 function openDeleteModal() {
-  deleteModal.classList.remove("hidden"); // Show the modal
+  deleteModal.classList.remove("hidden"); 
 }
 
 // Function to close delete confirmation modal
 function closeDeleteModal() {
-  deleteModal.classList.add("hidden"); // Hide the modal
+  deleteModal.classList.add("hidden"); 
 }
 
-// Event listener for "Yes" button (confirm delete)
+// Event listener for "Delete" button (confirm delete)
 confirmDeleteBtn.addEventListener("click", function () {
   if (currentDeleteRow) {
-    currentDeleteRow.remove(); // Remove the row
-    showNotification("Patient successfully deleted!"); // Show notification
+    currentDeleteRow.remove();
+    showNotification("Patient successfully deleted!");
   }
   closeDeleteModal(); // Close the modal
 });
 
-// Event listener for "No" button (cancel delete)
+// Event listener for "Cancel" button (cancel delete)
 cancelDeleteBtn.addEventListener("click", function () {
-  closeDeleteModal(); 
+  closeDeleteModal(); // Close the modal without deleting
 });
 
 // Event listener for Save button (add new patient)
@@ -105,7 +105,7 @@ saveBtn.addEventListener("click", () => {
       ? "images/allergy.png"
       : "images/picky eater.png"; 
 
-  // Add new patient
+  
   const newRow = document.createElement("tr");
   newRow.innerHTML = `
     <td><input type="checkbox"></td>
@@ -171,9 +171,8 @@ updateBtn.addEventListener("click", () => {
   const statusIcon =
     status === "Under Treatment"
       ? "images/allergy.png"
-      : "images/picky eater.png"; 
+      : "images/picky eater.png";
 
-  // Update existing patient
   currentEditRow.children[2].textContent = petName;
   currentEditRow.children[3].innerHTML = `<img src="${statusIcon}" alt="Status" class="icon">`;
   currentEditRow.children[4].textContent = pawrent;
